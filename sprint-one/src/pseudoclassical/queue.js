@@ -5,10 +5,23 @@ var Queue = function() {
   this.queueSize = 0;
 };
 
-Queue.prototype.enqueue = function() {};
+Queue.prototype.enqueue = function(value) {
+  this.storage[this.queueSize++] = value;
+};
 
-Queue.prototype.dequeue = function() {};
+Queue.prototype.dequeue = function() {
+  var result = this.storage[0];
+  _.each(this.storage, function(value, key,collection) {
+    collection[parseInt(key) - 1] = value;
+  });
+  delete this.storage[-1];
+  delete this.storage[--this.queueSize];
+  if(this.queueSize < 0) this.queueSize = 0;
+  return result;
+};
 
-Queue.prototype.size = function() {};
+Queue.prototype.size = function() {
+  return this.queueSize;
+};
 
 
