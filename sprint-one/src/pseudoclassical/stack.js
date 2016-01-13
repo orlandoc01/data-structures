@@ -6,14 +6,17 @@ var Stack = function() {
 };
 
 Stack.prototype.pop = function () {
-  // body...
+  var result = this.storage[--this.stackSize];
+  if(this.stackSize < 0) this.stackSize = 0;
+  delete this.storage[this.stackSize];
+  return result;
 };
 
-Stack.prototype.push = function () {
-  // body...
+Stack.prototype.push = function (value) {
+  this.storage[this.stackSize++]  =  value;
 };
 
 Stack.prototype.size = function () {
-  // body...
+  return this.stackSize;
 };
 
