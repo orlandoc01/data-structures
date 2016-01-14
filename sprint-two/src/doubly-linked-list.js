@@ -48,7 +48,7 @@ var doublyLinkedList = function() {
     this.tail = this.tail.previous;
     this.tail.next = null;
     return result;
-  }
+  };
 
   list.contains = function(target) {
     var found = false;
