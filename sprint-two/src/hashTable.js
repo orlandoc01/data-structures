@@ -3,14 +3,17 @@
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
+  this._used = 0;
 };
 
 HashTable.prototype.insert = function(k, v) {
+
   var index = getIndexBelowMaxForKey(k, this._limit);
   var bucket = this._storage.get(index);
   if(bucket === undefined) bucket = [];
   bucket.push([k,v]);
   this._storage.set(index, bucket);
+  this.used++;
 };
 
 HashTable.prototype.retrieve = function(k) {
