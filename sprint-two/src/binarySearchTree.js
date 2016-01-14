@@ -22,8 +22,18 @@ var BinarySearchTree = function(value) {
     else this.right.insert(value);
   }
  };
-BinarySearchTree.prototype.contains = function () {
+BinarySearchTree.prototype.contains = function (value) {
   // body...
+  var found = false;
+  var searchTree = function(BST) {
+    if (BST.value === value) found = true;
+    else { // looking left
+      if (BST.left !== null) searchTree(BST.left);
+      if (BST.right !== null) searchTree(BST.right);
+    }
+  };
+  searchTree(this);
+  return found;
 };
 
 BinarySearchTree.prototype.depthFirstLog = function (cb) {
