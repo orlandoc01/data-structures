@@ -7,7 +7,10 @@ var HashTable = function() {
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  this._storage.set(index, [k,v]);
+  var bucket = this._storage.get(index);
+  if(bucket === undefined) bucket = [];
+  bucket.push([k,v]);
+  this._storage.set(index, bucket);
 };
 
 HashTable.prototype.retrieve = function(k) {
