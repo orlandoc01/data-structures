@@ -6,10 +6,6 @@ var Graph = function() {
   this.vertices = [];
 };
 
-var GraphNode = function(value) {
-  this.value = value;
-  this.edges = [];
-};
 // ------------------------
 // Add a node to the graph, passing in the node's value.
 Graph.prototype.addNode = function(node) {
@@ -52,6 +48,7 @@ Graph.prototype.addEdge = function(fromNode, toNode) {
 // ------------------------
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode) {
+
 };
 
 // ------------------------
