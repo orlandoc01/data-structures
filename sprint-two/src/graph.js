@@ -3,11 +3,18 @@
 // ------------------------
 // Instantiate a new graph
 var Graph = function() {
+  this.vertices = [];
 };
 
+var GraphNode = function(value) {
+  this.value = value;
+  this.edges = [];
+};
 // ------------------------
 // Add a node to the graph, passing in the node's value.
 Graph.prototype.addNode = function(node) {
+  var newNode = new GraphNode(node);
+  this.vertices.push(newNode);
 };
 
 // ------------------------
