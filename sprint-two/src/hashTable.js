@@ -14,8 +14,10 @@ HashTable.prototype.insert = function(k, v) {
   bucket.push([k,v]);
   this._storage.set(index, bucket);
   this._used++;
-  if (this._used / this._limit >= 0.75){
+
+  if (this._used / this._limit > 0.75){
     // increase size
+    this.modifySize(this._limit*2);
   } 
 };
 
@@ -37,19 +39,22 @@ HashTable.prototype.remove = function(k) {
     if(hashIndex === index) collection.splice(index,1);
   });
   if(--this._used < 0) this._used = 0;
-  if (this._used / this._limit <= 0.25){
+
+
+  if (this._used / this._limit < 0.25){
     // decrease size
+    this.modifySize(Math.round(this._limit/2));
   }  
 };
 
 HashTable.prototype.modifySize = function(n) {
-  var that = this;
   var oldStore = this._storage;
-  this._storage = LimitedArray(n);
-  this._limit = n;
+  var newStore = LimitedArray(n);
   oldStore.each( function(pairArrays, index, collection) {
-    this._storage.set(index, pairArrays);
+    newStore.set(index, pairArrays);
   });
+  this._storage = newStore;
+  this._limit = n;
 };
 
 
