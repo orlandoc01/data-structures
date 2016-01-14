@@ -1,6 +1,7 @@
 var Tree = function(value) {
   var newTree = {};
   newTree.value = value;
+  newTree.parent = null;
 
   // your code here
   newTree.children = [];  // fix me **fixed
@@ -11,7 +12,9 @@ var treeMethods = {};
 
 treeMethods.addChild = function(value) {
   var newChild = Tree(value);
+  newChild.parent = this;
   this.children.push(newChild);
+
 };
 
 treeMethods.contains = function (target) {
