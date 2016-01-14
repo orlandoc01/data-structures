@@ -45,12 +45,10 @@ HashTable.prototype.remove = function(k) {
 HashTable.prototype.modifySize = function(n) {
   var that = this;
   var oldStore = this._storage;
-  this.storage = LimitedArray(n);
+  this._storage = LimitedArray(n);
   this._limit = n;
   oldStore.each( function(pairArrays, index, collection) {
-    _.each(pairArrays, function(pair) {
-      that.insert(pair[0], pair[1]);
-    });
+    this._storage.set(index, pairArrays);
   });
 };
 
