@@ -44,3 +44,26 @@ BinarySearchTree.prototype.depthFirstLog = function (cb) {
 
   // body...
 };
+
+BinarySearchTree.prototype.breadthFirstLog = function (cb) {
+  var levelNodes = {};
+  var searchTree = function(BST, level) {
+    if(levelNodes[level] === undefined) levelNodes[level]  = [];
+    levelNodes[level].push(BST.value);
+    var newLevel = level + 1;
+    if(BST.left !== null) {
+      searchTree(BST.left, newLevel);
+    }
+    if(BST.right !== null) {
+      searchTree(BST.right, newLevel);
+    }
+  };
+  searchTree(this, 0);
+  _.each(levelNodes, function(ArrayValues, level, coll) {
+    _.each(ArrayValues, function(value) {
+      cb(value);
+    });
+  });
+
+
+};
