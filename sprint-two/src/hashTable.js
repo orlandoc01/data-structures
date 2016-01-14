@@ -31,6 +31,8 @@ HashTable.prototype.remove = function(k) {
   this._storage.each(function(keyValuePair, hashIndex, collection) {
     if(hashIndex === index) collection.splice(index,1);
   });
+  this._used--;
+  if(this._used < 0) this._used = 0;
 };
 
 
