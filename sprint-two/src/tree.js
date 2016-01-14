@@ -17,6 +17,15 @@ treeMethods.addChild = function(value) {
 
 };
 
+treeMethods.removeFromParent = function () {
+  var that = this;
+  var newChildren = _.filter(this.parent.children, function (childTree) {
+    return childTree.value !== that.value;      
+  });
+  this.parent.children = newChildren;
+  this.parent = null;
+};
+
 treeMethods.contains = function (target) {
   var found = false;
   
@@ -33,8 +42,6 @@ treeMethods.contains = function (target) {
   lookThroughTree(this);
 
   return found;
-
-
 };
 
 
