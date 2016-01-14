@@ -13,7 +13,7 @@ HashTable.prototype.insert = function(k, v) {
   if(bucket === undefined) bucket = [];
   bucket.push([k,v]);
   this._storage.set(index, bucket);
-  this.used++;
+  this._used++;
   if (this._used / this._limit >= 0.75){
     // increase size
   } 
@@ -42,6 +42,17 @@ HashTable.prototype.remove = function(k) {
   }  
 };
 
+HashTable.prototype.modifySize = function(n) {
+  var that = this;
+  var oldStore = this._storage;
+  this.storage = LimitedArray(n);
+  this._limit = n;
+  oldStore.each( function(pairArrays, index, collection) {
+    _.each(pairArrays, function(pair) {
+      that.insert(pair[0], pair[1]);
+    });
+  });
+};
 
 
 /*
