@@ -26,6 +26,18 @@ var LinkedList = function() {
   };
 
   list.contains = function(target) {
+    var found = false;
+    var examinedNode = this.head;
+    while(examinedNode !== null){
+      if (examinedNode.value === target) {
+        found = true;
+        break;
+      }
+      examinedNode = examinedNode.next;
+    }
+
+
+    return found;
   };
 
   return list;
