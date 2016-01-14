@@ -14,7 +14,24 @@ treeMethods.addChild = function(value) {
   this.children.push(newChild);
 };
 
-treeMethods.contains = function(target) {
+treeMethods.contains = function (target) {
+  var found = false;
+  
+  var lookThroughTree = function(tree) {
+    if(tree.value === target) found = true;
+    else {
+      if(tree.children.length !== 0) {
+        _.each(tree.children, function(tree) {
+          lookThroughTree(tree);
+        });
+      }
+    }
+  };
+  lookThroughTree(this);
+
+  return found;
+
+
 };
 
 
