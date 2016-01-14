@@ -20,6 +20,10 @@ Graph.prototype.contains = function(node) {
 // ------------------------
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node) {
+  _.each(this.vertices[node], function(nodeValue) {
+    this.removeEdge(nodeValue, node);
+  });
+  delete this.vertices[node];
   
 };
 
