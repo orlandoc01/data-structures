@@ -50,12 +50,11 @@ BinarySearchTree.prototype.breadthFirstLog = function (cb) {
   var searchTree = function(BST, level) {
     if(levelNodes[level] === undefined) levelNodes[level]  = [];
     levelNodes[level].push(BST.value);
-    var newLevel = level + 1;
     if(BST.left !== null) {
-      searchTree(BST.left, newLevel);
+      searchTree(BST.left, level + 1);
     }
     if(BST.right !== null) {
-      searchTree(BST.right, newLevel);
+      searchTree(BST.right, level + 1);
     }
   };
   searchTree(this, 0);
