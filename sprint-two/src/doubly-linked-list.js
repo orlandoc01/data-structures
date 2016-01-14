@@ -17,8 +17,23 @@ var doublyLinkedList = function() {
       newNode.previous = this.tail;
       this.tail = newNode;
     }
-  
-    
+  };
+
+  list.addToHead = function(value) {
+    var newNode = new Node(value);
+    if (this.head === null) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else if(this.tail === null) {
+      this.tail.previous = newNode;
+      this.head = newNode;
+      this.head.next = this.tail;
+    } else {
+      this.head.previous = newNode;
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+
   };
 
   list.removeHead = function() {
