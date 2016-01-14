@@ -20,7 +20,9 @@ var LinkedList = function() {
   };
 
   list.removeHead = function() {
-    
+    var result = this.head.value;
+    this.head = this.head.next;
+    return result;
   };
 
   list.contains = function(target) {
