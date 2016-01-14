@@ -26,6 +26,13 @@ var doublyLinkedList = function() {
     return result;
   };
 
+  list.removeTail = function() {
+    var result = this.tail.value;
+    this.tail = this.tail.previous;
+    this.tail.next = null;
+    return result;
+  }
+
   list.contains = function(target) {
     var found = false;
     var examinedNode = this.head;
