@@ -23,6 +23,23 @@ var BinarySearchTree = function(value) {
     if(this.right === null) this.right = newBinaryTree;
     else this.right.insert(value);
   }
+
+  if(this.getMaxDepth() / this.getMinDepth() > 2){
+    var sortedValues = [];
+    var pushSortedValues = function(tree) {
+      if(tree.left !== null){
+        pushSortedValues(tree.left);
+      }
+      sortedValues.push(tree.value);
+      if(tree.right !==null){
+        pushSortedValues(tree.right);
+      }
+    };
+    pushSortedValues(this);
+  }
+
+
+
  };
 BinarySearchTree.prototype.contains = function (value) {
   // body...
