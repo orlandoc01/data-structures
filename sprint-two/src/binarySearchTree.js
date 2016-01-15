@@ -3,8 +3,6 @@ var BinarySearchTree = function(value) {
   BSTInstance.value = value;
   BSTInstance.left = null;
   BSTInstance.right = null;
-  BSTInstance.maxDepth = 0;
-  BSTInstance.minDepth = 0;
   return BSTInstance;
 };
 
