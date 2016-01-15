@@ -2,10 +2,11 @@ describe('bloomFilter', function () {
   // body..
   var users;
   var BFIntance;
+  var notAdded;
   beforeEach(function () {
     // body...
-    users = ["Orlando", "Shiva", "Andrew", "Brendan", "Dave",
-                 "Shannon", "Sarah", "Claire", "Vince", "Lance"];
+    users = ["Orlando", "Shiva", "Andrew", "Brendan", "Dave"];
+    notAdded = ["Shannon", "Sarah", "Claire", "Vince", "Lance"];
     BFIntance = new BloomFilter(18);
   });
 
@@ -15,5 +16,9 @@ describe('bloomFilter', function () {
       BFIntance.store(user);
     });
     expect(_.every(users, user => BFIntance.check(user))).to.equal(true);
+  });
+
+  it("Should not find items that were not stored", function(){
+    expect(_.every(notAdded, user => !BFIntance.check(user))).to.equal(true);
   });
 });
