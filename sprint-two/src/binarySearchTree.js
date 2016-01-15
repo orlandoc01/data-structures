@@ -3,6 +3,8 @@ var BinarySearchTree = function(value) {
   BSTInstance.value = value;
   BSTInstance.left = null;
   BSTInstance.right = null;
+  BSTInstance.maxDepth = 0;
+  BSTInstance.minDepth = 0;
   return BSTInstance;
 };
 
@@ -12,7 +14,7 @@ var BinarySearchTree = function(value) {
  */
 
  BinarySearchTree.prototype.insert = function (value) {
-   // body...
+   
   var newBinaryTree = new BinarySearchTree(value);
   if(value < this.value) { //look left
     if(this.left === null) this.left = newBinaryTree;
@@ -64,5 +66,23 @@ BinarySearchTree.prototype.breadthFirstLog = function (cb) {
     });
   });
 
+};
 
+BinarySearchTree.prototype.getMinDepth = function () {
+  var getMinDepthOfTree = function(tree) {
+    if (tree === null) return 0;
+    else return 1 + Math.min(getMinDepthOfTree(tree.left), getMinDepthOfTree(tree.right));
+  };
+  var result = getMinDepthOfTree(this);
+  return result;
+};
+
+
+BinarySearchTree.prototype.getMaxDepth = function() {
+  var getMaxDepthOfTree = function(tree) {
+    if(tree === null) return 0;
+    else return 1 + Math.max(getMaxDepthOfTree(tree.left), getMaxDepthOfTree(tree.right));
+  };
+  var result = getMaxDepthOfTree(this);
+  return result;
 };
