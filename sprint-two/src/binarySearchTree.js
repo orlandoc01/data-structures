@@ -13,7 +13,7 @@ var BinarySearchTree = function(value) {
  * Complexity: What is the time complexity of the above functions?
  */
 
- BinarySearchTree.prototype.insert = function (value) {
+ BinarySearchTree.prototype.insert = function (value, refactoring) {
   
   if(this.value === undefined) {
     this.value = value;
@@ -29,35 +29,12 @@ var BinarySearchTree = function(value) {
     if(this.right === null) this.right = newBinaryTree;
     else this.right.insert(value);
   }
+  
 
-  if(this.getMaxDepth() / this.getMinDepth() > 2){
-    var sortedValues = [];
-    var pushSortedValues = function(tree) {
-      if(tree.left !== null){
-        pushSortedValues(tree.left);
-      }
-      sortedValues.push(tree.value);
-      if(tree.right !==null){
-        pushSortedValues(tree.right);
-      }
-    };
-    pushSortedValues(this);
-    var newTree = BinarySearchTree();
-    var makeNewTree = function (arr) {
-      if (arr.length === 1) newTree.insert(arr[0]);
-      else {
-        var mid = Math.floor(arr.length/2);
-        newTree.insert(arr[mid]);
-        var lesser = arr.slice(0,mid);
-        var greater  = arr.slice(mid+1, arr.length);
-        makeNewTree(lesser);
-        makeNewTree(greater);
-      }
-    };
-    makeNewTree(sortedValues);
-    this.value = newTree.value;
-    this.left = newTree.left;
-    this.right = newTree.right;
+  var maxDepth = this.getMaxDepth();
+  var minDepth = this.getMinDepth();
+  if(maxDepth / minDepth > 2) {
+    //this.refactor();
   }
 
 
@@ -125,4 +102,34 @@ BinarySearchTree.prototype.getMaxDepth = function() {
   };
   var result = getMaxDepthOfTree(this);
   return result;
+};
+
+BinarySearchTree.prototype.refactor = function() {
+    var sortedValues = [];
+    var pushSortedValues = function(tree) {
+      if(tree.left !== null){
+        pushSortedValues(tree.left);
+      }
+      sortedValues.push(tree.value);
+      if(tree.right !==null){
+        pushSortedValues(tree.right);
+      }
+    };
+    pushSortedValues(this);
+    var newTree = BinarySearchTree();
+    var makeNewTree = function (arr) {
+      if (arr.length === 1) newTree.insert(arr[0]);
+      else {
+        var mid = Math.floor(arr.length/2);
+        newTree.insert(arr[mid]);
+        var lesser = arr.slice(0,mid);
+        var greater  = arr.slice(mid+1, arr.length);
+        makeNewTree(lesser);
+        makeNewTree(greater);
+      }
+    };
+    makeNewTree(sortedValues);
+    this.value = newTree.value;
+    this.left = newTree.left;
+    this.right = newTree.right;
 };
