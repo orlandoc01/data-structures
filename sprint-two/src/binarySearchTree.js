@@ -14,8 +14,14 @@ var BinarySearchTree = function(value) {
  */
 
  BinarySearchTree.prototype.insert = function (value) {
-   
-  var newBinaryTree = new BinarySearchTree(value);
+  
+  if(this.value === undefined) {
+    this.value = value;
+    return;
+  }
+
+
+  var newBinaryTree = BinarySearchTree(value);
   if(value < this.value) { //look left
     if(this.left === null) this.left = newBinaryTree;
     else this.left.insert(value);
@@ -36,11 +42,28 @@ var BinarySearchTree = function(value) {
       }
     };
     pushSortedValues(this);
+    var newTree = BinarySearchTree();
+    var makeNewTree = function (arr) {
+      if (arr.length === 1) newTree.insert(arr[0]);
+      else {
+        var mid = Math.floor(arr.length/2);
+        newTree.insert(arr[mid]);
+        var lesser = arr.slice(0,mid);
+        var greater  = arr.slice(mid+1, arr.length);
+        makeNewTree(lesser);
+        makeNewTree(greater);
+      }
+    };
+    makeNewTree(sortedValues);
+    this.value = newTree.value;
+    this.left = newTree.left;
+    this.right = newTree.right;
   }
 
 
 
- };
+};
+
 BinarySearchTree.prototype.contains = function (value) {
   // body...
   var found = false;
