@@ -11,7 +11,7 @@ var BinarySearchTree = function(value) {
  * Complexity: What is the time complexity of the above functions?
  */
 
- BinarySearchTree.prototype.insert = function (value, refactoring) {
+ BinarySearchTree.prototype.insert = function (value, rebalancing) {
   
   if(this.value === undefined) {
     this.value = value;
@@ -28,15 +28,13 @@ var BinarySearchTree = function(value) {
     else this.right.insert(value);
   }
   
+  if(!rebalancing) {
+    var maxDepth = this.getMaxDepth();
+    var minDepth = this.getMinDepth();
+    if(maxDepth / minDepth > 2) {
+      this.rebalance();
 
-  var maxDepth = this.getMaxDepth();
-  var minDepth = this.getMinDepth();
-  if(maxDepth / minDepth > 2) {
-    var newTree = this.refactor();
-    this.value = newTree.value;
-    this.left = newTree.left;
-    this.right = newTree.right;
-
+    }
   }
 
 
@@ -106,7 +104,7 @@ BinarySearchTree.prototype.getMaxDepth = function() {
   return result;
 };
 
-BinarySearchTree.prototype.refactor = function() {
+BinarySearchTree.prototype.rebalance = function() {
     var sortedValues = [];
     var pushSortedValues = function(tree) {
       if(tree.left !== null){
@@ -118,13 +116,16 @@ BinarySearchTree.prototype.refactor = function() {
       }
     };
     pushSortedValues(this);
-    var newTree = BinarySearchTree();
+    this.value = undefined;
+    this.left = null;
+    this.right = null;
+    var thiz = this;
     var makeNewTree = function (arr) {
       if (arr.length === 0) return;
-      else if (arr.length === 1) newTree.insert(arr[0]);
+      else if (arr.length === 1) thiz.insert(arr[0], true);
       else {
         var mid = Math.floor(arr.length/2);
-        newTree.insert(arr[mid]);
+        thiz.insert(arr[mid], true);
         var lesser = arr.slice(0,mid);
         var greater  = arr.slice(mid+1, arr.length);
         makeNewTree(lesser);
@@ -132,5 +133,4 @@ BinarySearchTree.prototype.refactor = function() {
       }
     };
     makeNewTree(sortedValues);
-    return newTree;
 };
