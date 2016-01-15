@@ -30,7 +30,9 @@ treeMethods.contains = function (target) {
   var found = false;
   
   var lookThroughTree = function(tree) {
-    if(tree.value === target) found = true;
+    if(tree.value === target) {
+      found = true;
+    }
     else {
       if(tree.children.length !== 0) {
         _.each(tree.children, function(tree) {

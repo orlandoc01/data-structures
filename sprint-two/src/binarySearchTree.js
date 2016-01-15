@@ -45,10 +45,16 @@ BinarySearchTree.prototype.contains = function (value) {
   // body...
   var found = false;
   var searchTree = function(BST) {
-    if (BST.value === value) found = true;
+    if (BST.value === value) {
+      found = true;
+    }
     else { // looking left
-      if (BST.left !== null) searchTree(BST.left);
-      if (BST.right !== null) searchTree(BST.right);
+      if (BST.left !== null) {
+        searchTree(BST.left);
+      }
+      if (BST.right !== null) {
+        searchTree(BST.right);
+      }
     }
   };
   searchTree(this);
@@ -57,17 +63,27 @@ BinarySearchTree.prototype.contains = function (value) {
 
 BinarySearchTree.prototype.depthFirstLog = function (cb) {
   cb(this.value);
-  if (this.left !== null) this.left.depthFirstLog(cb);
-  if (this.right !== null) this.right.depthFirstLog(cb);
+  if (this.left !== null) {
+    this.left.depthFirstLog(cb);
+  }
+  if (this.right !== null) {
+    this.right.depthFirstLog(cb);
+  }
   
 
   // body...
 };
 
+
+
+
+
 BinarySearchTree.prototype.breadthFirstLog = function (cb) {
   var levelNodes = {};
   var searchTree = function(BST, level) {
-    if(levelNodes[level] === undefined) levelNodes[level]  = [];
+    if(levelNodes[level] === undefined) {
+      levelNodes[level]  = [];
+    }
     levelNodes[level].push(BST.value);
     if(BST.left !== null) {
       searchTree(BST.left, level + 1);
@@ -87,8 +103,12 @@ BinarySearchTree.prototype.breadthFirstLog = function (cb) {
 
 BinarySearchTree.prototype.getMinDepth = function () {
   var getMinDepthOfTree = function(tree) {
-    if (tree === null) return 0;
-    else return 1 + Math.min(getMinDepthOfTree(tree.left), getMinDepthOfTree(tree.right));
+    if (tree === null) {
+      return 0;
+    }
+    else {
+      return 1 + Math.min(getMinDepthOfTree(tree.left), getMinDepthOfTree(tree.right));
+    }
   };
   var result = getMinDepthOfTree(this);
   return result;
@@ -97,8 +117,12 @@ BinarySearchTree.prototype.getMinDepth = function () {
 
 BinarySearchTree.prototype.getMaxDepth = function() {
   var getMaxDepthOfTree = function(tree) {
-    if(tree === null) return 0;
-    else return 1 + Math.max(getMaxDepthOfTree(tree.left), getMaxDepthOfTree(tree.right));
+    if(tree === null) {
+      return 0;
+    }
+    else {
+      return 1 + Math.max(getMaxDepthOfTree(tree.left), getMaxDepthOfTree(tree.right));
+    }
   };
   var result = getMaxDepthOfTree(this);
   return result;
@@ -116,6 +140,8 @@ BinarySearchTree.prototype.rebalance = function() {
       }
     };
     pushSortedValues(this);
+
+
     this.value = undefined;
     this.left = null;
     this.right = null;
