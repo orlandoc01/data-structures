@@ -34,7 +34,11 @@ var BinarySearchTree = function(value) {
   var maxDepth = this.getMaxDepth();
   var minDepth = this.getMinDepth();
   if(maxDepth / minDepth > 2) {
-    //this.refactor();
+    var newTree = this.refactor();
+    this.value = newTree.value;
+    this.left = newTree.left;
+    this.right = newTree.right;
+
   }
 
 
@@ -118,7 +122,8 @@ BinarySearchTree.prototype.refactor = function() {
     pushSortedValues(this);
     var newTree = BinarySearchTree();
     var makeNewTree = function (arr) {
-      if (arr.length === 1) newTree.insert(arr[0]);
+      if (arr.length === 0) return;
+      else if (arr.length === 1) newTree.insert(arr[0]);
       else {
         var mid = Math.floor(arr.length/2);
         newTree.insert(arr[mid]);
@@ -129,7 +134,5 @@ BinarySearchTree.prototype.refactor = function() {
       }
     };
     makeNewTree(sortedValues);
-    this.value = newTree.value;
-    this.left = newTree.left;
-    this.right = newTree.right;
+    return newTree;
 };
