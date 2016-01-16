@@ -24,6 +24,7 @@
   </style>
   <script src="../lib/jquery/jquery.js"></script>
   <script src="../lib/underscore/underscore.js"></script>
+  <script type="text/javascript" src="src/prefixTree.js"></script>
 
 </head>
 <body>
@@ -102,7 +103,10 @@ $(document).ready(function () {
                       ['g', 'h', 'i', '4'], ['j','k', 'l', '5'], ['m', 'n', 'o', '6'],
                       ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
   var keyPadClicked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
-  var timer;
+  var PTree = new PrefixTree();
+  var autocompleteResults = $('.autocomplete-Results');
+
+
   $('.keypad').on('mouseenter', function () {
     $(this).addClass('highlighted');
   }); 
@@ -119,12 +123,11 @@ $(document).ready(function () {
   txtArea.val(completeTxt);
  });
   $('.keypad').on('click', function () {
-    timer = Date.now();
     var index = parseInt($(this).data('num'));
     var numClicks = keyPadClicked[index]; 
     var chr = keyPadValues[index][numClicks];
     keyPadClicked[index] = (numClicks + 1) % keyPadValues[index].length;
-    completeTxt = String(txtArea.val());
+    completeTxt = txtArea.val();
     if(numClicks === 0) {
       txtArea.val(completeTxt + chr);
       setTimeout(function() {
@@ -140,9 +143,18 @@ $(document).ready(function () {
         keyPadClicked[OtherIndex] = 0;
       }
     });
-  
+    completeTxt = txtArea.val();
+    txtWord = completeTxt.split(" ");
+    txtWord = txtWord[txtWord.length - 1];
+    // populate PTree
+    console.log(txtWord);
+    //populateAutocompleteResults(txtWord);
   });
-  txtWord = completeTxt.split(" ")[completeTxt.length-1];
+
+  function populateAutocompleteResults(word) {
+
+  }
+
 });
   
 </script>
