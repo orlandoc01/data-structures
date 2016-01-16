@@ -48,6 +48,9 @@ PrefixTree.prototype.navigate = function(str) {
 PrefixTree.prototype.autocomplete = function(str) {
   var results = [];
   var possib = this.navigate(str);
+  if(!possib) {
+    return str;
+  }
   var navigateDown = function(prefT, resultStr) {
     if(prefT.children.length === 0) results.push(resultStr);
     else {
