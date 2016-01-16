@@ -12,6 +12,7 @@ PrefixTree.prototype.insert = function (str) {
   } else if(this.children.length === 0) {
     newPT = new PrefixTree(str[0]);
     newPT.insert(str.slice(1));
+    newPT.parent = this;
     this.children.push(newPT);
   } else {
     var matchingChild = this.children.find(function (childPT) {
@@ -22,6 +23,7 @@ PrefixTree.prototype.insert = function (str) {
     } else {
       newPT = new PrefixTree(str[0]);
       newPT.insert(str.slice(1));
+      newPT.parent = this;
       this.children.push(newPT);
     }    
   }
@@ -43,7 +45,20 @@ PrefixTree.prototype.navigate = function(str) {
   }
 };
 
-
+PrefixTree.prototype.autocomplete = function(str) {
+  var results = [];
+  var possib = this.navigate(str);
+  var navigateDown = function(prefT, resultStr) {
+    if(prefT.children.length === 0) results.push(resultStr);
+    else {
+      _.each(prefT.children, function(tree){
+        navigateDown(tree, resultStr + tree.value);
+      });
+    }
+  };
+  navigateDown(possib, str);
+  return results;
+};
 
 
 
