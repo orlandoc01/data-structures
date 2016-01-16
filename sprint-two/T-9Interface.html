@@ -93,7 +93,7 @@
         <p>&nbsp;</p>
       </div>
     </div>
-
+    <br>
     <div class='row'>
       <div id='option1'>
         <p>&nbsp;</p>
@@ -118,14 +118,20 @@ $(document).ready(function () {
                       ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
   var keyPadClicked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
   var PTree = new PrefixTree();
+  PTree.insert("hi");
+  PTree.insert("hello");
+  PTree.insert("help");
   var autocompleteResults = $('.autocomplete-Results');
+  var option1 = $('#option1').find('p');
+  var option2 = $('#option2').find('p');
+  var option3 = $('#option3').find('p');
 
 
-  $('.keypad').on('mouseenter', function () {
+  $('.keypad, .space, .clear').on('mouseenter', function () {
     $(this).addClass('highlighted');
   }); 
 
-  $('.keypad').on('mouseleave', function () {
+  $('.keypad, .space, .clear').on('mouseleave', function () {
     $(this).removeClass('highlighted');
   });
 
@@ -135,6 +141,7 @@ $(document).ready(function () {
  $('.space').on('click', function () {
   completeTxt = txtArea.val()+ " ";
   txtArea.val(completeTxt);
+  clearAutocompleteResults();
  });
   $('.keypad').on('click', function () {
     var index = parseInt($(this).data('num'));
@@ -166,7 +173,16 @@ $(document).ready(function () {
 
   function populateAutocompleteResults(word) {
     var options = PTree.autocomplete(word);   
+    option1.html(options[0] || "&nbsp;");
+    option2.html(options[1] || "&nbsp;");
+    option3.html(options[2] || "&nbsp;");
+    console.log(options);
+  }
 
+  function clearAutocompleteResults() {
+    option1.html("&nbsp;");
+    option2.html("&nbsp;");
+    option3.html("&nbsp;");
   }
 
 });
