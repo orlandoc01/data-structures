@@ -76,7 +76,7 @@
     </div>
 
     <div class="row" >
-      <div class='keypad' data-num='10'>
+      <div class='keypad clear' data-num='10'>
        <p>&nbsp;</p>
        <p>&nbsp;</p>
       </div>
@@ -97,7 +97,7 @@ $(document).ready(function () {
   var txtStr;
   var keyPadValues = [[], [], ['a','b','c','2'], ['d','e','f', '3'],
                       ['g', 'h', 'i', '4'], ['j','k', 'l', '5'], ['m', 'n', 'o', '6'],
-                      ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9']];
+                      ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
   var keyPadClicked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 
   $('.keypad').on('mouseenter', function () {
@@ -106,6 +106,10 @@ $(document).ready(function () {
 
   $('.keypad').on('mouseleave', function () {
     $(this).removeClass('highlighted');
+  });
+
+ $('.clear').on('click', function (e) {
+    txtArea.val('');
   });
 
   $('.keypad').on('click', function () {
@@ -118,6 +122,8 @@ $(document).ready(function () {
 
 
   });
+
+  
 
 });
   
