@@ -125,7 +125,8 @@ $(document).ready(function () {
   var option1 = $('#option1').find('p');
   var option2 = $('#option2').find('p');
   var option3 = $('#option3').find('p');
-
+  var timeOutID;
+  var clickedInLastSecond = false;
 
   $('.keypad, .space, .clear, .autocomplete').on('mouseenter', function () {
     $(this).addClass('highlighted');
@@ -139,8 +140,10 @@ $(document).ready(function () {
     txtArea.val('');
   });
   $('.space').on('click', function () {
-  completeTxt = txtArea.val()+ " ";
-  txtArea.val(completeTxt);
+  completeTxt = txtArea.val();
+  txtWords = completeTxt.split(" ");  
+  PTree.insert(txtWords[txtWords.length-1]);
+  txtArea.val(completeTxt + " ");
   clearAutocompleteResults();
  });
 
@@ -150,13 +153,20 @@ $(document).ready(function () {
     var chr = keyPadValues[index][numClicks];
     keyPadClicked[index] = (numClicks + 1) % keyPadValues[index].length;
     completeTxt = txtArea.val();
-    if(numClicks === 0) {
+    if(!clickedInLastSecond) {
+      clickedInLastSecond = true;
       txtArea.val(completeTxt + chr);
-      setTimeout(function() {
+      timeOutID = setTimeout(function() {
         keyPadClicked[index] = 0;
+        clickedInLastSecond = false;
       }, 1000);
     }
     else {
+      clearTimeout(timeOutID);
+      timeOutID = setTimeout(function() {
+        keyPadClicked[index] = 0;
+        clickedInLastSecond = false;
+      }, 1000);
       completeTxt = completeTxt.slice(0,completeTxt.length-1) + chr;
       txtArea.val(completeTxt);
     }
@@ -182,11 +192,12 @@ $(document).ready(function () {
   });
 
   function populateAutocompleteResults(word) {
-    var options = PTree.autocomplete(word);   
-    option1.html(options[0] || "&nbsp;");
-    option2.html(options[1] || "&nbsp;");
-    option3.html(options[2] || "&nbsp;");
-    console.log(options);
+    var options = PTree.autocomplete(word);
+    if (options !== word) {   
+      option1.html(options[0] || "&nbsp;");
+      option2.html(options[1] || "&nbsp;");
+      option3.html(options[2] || "&nbsp;");
+    }
   }
 
   function clearAutocompleteResults() {
