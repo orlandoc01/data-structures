@@ -113,13 +113,18 @@ $(document).ready(function () {
   });
 
   $('.keypad').on('click', function () {
-    var index = parseInt($(this).data('num')); 
-    var chr = keyPadValues[index][keyPadClicked[index]];
-    keyPadClicked[index] = (keyPadClicked[index] + 1) % keyPadValues[index].length;
-
-    txtStr = txtArea.val();
-    txtArea.val(txtStr + chr);
-
+    var index = parseInt($(this).data('num'));
+    var numClicks = keyPadClicked[index]; 
+    var chr = keyPadValues[index][numClicks];
+    keyPadClicked[index] = (numClicks + 1) % keyPadValues[index].length;
+    txtStr = String(txtArea.val());
+    if(numClicks === 0) {
+      txtArea.val(txtStr + chr);
+    }
+    else {
+      txtStr = txtStr.slice(0,txtStr.length-1) + chr;
+      txtArea.val(txtStr);
+    }
 
   });
 
