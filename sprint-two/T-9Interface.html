@@ -103,7 +103,12 @@ $(document).ready(function () {
 
   $('.keypad').on('click', function () {
     var num = $(this).data('num');
-    console.log(num);
+  
+    var txtArea = $('.text_area').find('input');
+    var txtStr = txtArea.val();
+    txtArea.val(txtStr + num);
+
+
   });
 });
   
