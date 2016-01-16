@@ -17,7 +17,12 @@
     .text_area {
       margin-bottom: 10px;
     }
+
+    .highlighted {
+      background-color: yellow; 
+    }
   </style>
+  <script src="../lib/jquery/jquery.js"></script>
 </head>
 <body>
 <div class='phone'>
@@ -27,7 +32,7 @@
     <div class="row">
       <div class='keypad' >
         <p>1</p>
-        <p> &nbsp </p> 
+        <p> &nbsp;</p> 
       </div>
       <div class='keypad' >
         <p>2</p>
@@ -72,18 +77,34 @@
 
     <div class="row">
       <div class='keypad' >
-       <p>&nbsp</p>
-       <p>&nbsp</p>
+       <p>&nbsp;</p>
+       <p>&nbsp;</p>
       </div>
       <div class='keypad' >
         <p>0</p>
-        <p>&nbsp</p>
+        <p>&nbsp;</p>
       </div>
       <div class='keypad' >
         <p>#</p>
-        <p>&nbsp</p>
+        <p>&nbsp;</p>
       </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function () {
+  $('.keypad').on('mouseenter', function () {
+    $(this).addClass('highlighted');
+  }); 
+
+  $('.keypad').on('mouseleave', function () {
+    $(this).removeClass('highlighted');
+  });
+
+});
+
+</script>
+
+
 </body>
 </html>
