@@ -126,7 +126,8 @@ $(document).ready(function () {
   var option2 = $('#option2').find('p');
   var option3 = $('#option3').find('p');
   var timeOutID;
-  var clickedInLastSecond = false;
+  var clickedInLastSecond = [false, false, false, false, false, false, false, false,
+                            false, false, false, false];
 
   $('.keypad, .space, .clear, .autocomplete').on('mouseenter', function () {
     $(this).addClass('highlighted');
@@ -139,6 +140,7 @@ $(document).ready(function () {
   $('.clear').on('click', function (e) {
     txtArea.val('');
   });
+
   $('.space').on('click', function () {
   completeTxt = txtArea.val();
   txtWords = completeTxt.split(" ");  
@@ -153,28 +155,29 @@ $(document).ready(function () {
     var chr = keyPadValues[index][numClicks];
     keyPadClicked[index] = (numClicks + 1) % keyPadValues[index].length;
     completeTxt = txtArea.val();
-    if(!clickedInLastSecond) {
-      clickedInLastSecond = true;
+    
+    if(!clickedInLastSecond[index]) {
+      clickedInLastSecond[index] = true;
       txtArea.val(completeTxt + chr);
       timeOutID = setTimeout(function() {
         keyPadClicked[index] = 0;
-        clickedInLastSecond = false;
+        clickedInLastSecond[index] = false;
       }, 1000);
     }
     else {
       clearTimeout(timeOutID);
       timeOutID = setTimeout(function() {
         keyPadClicked[index] = 0;
-        clickedInLastSecond = false;
+        clickedInLastSecond[index] = false;
       }, 1000);
       completeTxt = completeTxt.slice(0,completeTxt.length-1) + chr;
       txtArea.val(completeTxt);
     }
-    _.each(keyPadClicked, function(numClicked, OtherIndex) {
-      if(OtherIndex !== index) {
-        keyPadClicked[OtherIndex] = 0;
-      }
-    });
+    // _.each(keyPadClicked, function(numClicked, OtherIndex) {
+    //   if(OtherIndex !== index) {
+    //     keyPadClicked[OtherIndex] = 0;
+    //   }
+    // });
     completeTxt = txtArea.val();
     txtWords = completeTxt.split(" ");
     txtWord = txtWords[txtWords.length - 1];
