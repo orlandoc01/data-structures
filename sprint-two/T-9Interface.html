@@ -95,13 +95,13 @@
     </div>
     <br>
     <div class='row'>
-      <div id='option1'>
+      <div class="autocomplete" id='option1'>
         <p>&nbsp;</p>
       </div>
-      <div id='option2'>
+      <div class="autocomplete" id='option2'>
         <p>&nbsp;</p>
       </div>
-      <div id='option3'>
+      <div class="autocomplete" id='option3'>
         <p>&nbsp;</p>
       </div>
     </div>
@@ -112,7 +112,7 @@
 $(document).ready(function () {
   var txtArea = $('.text_area').find('input');
   var completeTxt = "";
-  var txtWord;
+  var txtWord, txtWords;
   var keyPadValues = [['0'], ['1'], ['a','b','c','2'], ['d','e','f', '3'],
                       ['g', 'h', 'i', '4'], ['j','k', 'l', '5'], ['m', 'n', 'o', '6'],
                       ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
@@ -127,22 +127,23 @@ $(document).ready(function () {
   var option3 = $('#option3').find('p');
 
 
-  $('.keypad, .space, .clear').on('mouseenter', function () {
+  $('.keypad, .space, .clear, .autocomplete').on('mouseenter', function () {
     $(this).addClass('highlighted');
   }); 
 
-  $('.keypad, .space, .clear').on('mouseleave', function () {
+  $('.keypad, .space, .clear, .autocomplete').on('mouseleave', function () {
     $(this).removeClass('highlighted');
   });
 
- $('.clear').on('click', function (e) {
+  $('.clear').on('click', function (e) {
     txtArea.val('');
   });
- $('.space').on('click', function () {
+  $('.space').on('click', function () {
   completeTxt = txtArea.val()+ " ";
   txtArea.val(completeTxt);
   clearAutocompleteResults();
  });
+
   $('.keypad').on('click', function () {
     var index = parseInt($(this).data('num'));
     var numClicks = keyPadClicked[index]; 
@@ -165,10 +166,19 @@ $(document).ready(function () {
       }
     });
     completeTxt = txtArea.val();
-    txtWord = completeTxt.split(" ");
-    txtWord = txtWord[txtWord.length - 1];
+    txtWords = completeTxt.split(" ");
+    txtWord = txtWords[txtWords.length - 1];
     // populate PTree
     populateAutocompleteResults(txtWord);
+  });
+
+  $('.autocomplete').on('click', function () {
+    var selectedWord = $(this).find('p').html();
+    completeTxt = txtArea.val();
+    txtWords = completeTxt.split(" ");
+    txtWords[txtWords.length-1] = selectedWord;
+    txtArea.val(txtWords.join(' ')+" ");
+    clearAutocompleteResults();
   });
 
   function populateAutocompleteResults(word) {
