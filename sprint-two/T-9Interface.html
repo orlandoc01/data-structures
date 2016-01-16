@@ -3,7 +3,8 @@
 <head>
   <title> Interface</title>
   <style>
-    .keypad {
+    .keypad, .clear, .space,
+    #option1, #option2, #option3 {
       display: inline-block;
       width: 25%;
       border: 1px solid black;
@@ -79,19 +80,32 @@
     </div>
 
     <div class="row" >
-      <div class='keypad clear' data-num='10'>
+      <div class='clear' data-num='10'>
        <p>Clear</p>
        <p>&nbsp;</p>
       </div>
-      <div class='keypad' data-num='11'>
+      <div class='keypad' data-num='0'>
         <p>0</p>
         <p>&nbsp;</p>
       </div>
-      <div class='keypad space' data-num='12'>
+      <div class='space' data-num='12'>
         <p>Space</p>
         <p>&nbsp;</p>
       </div>
     </div>
+
+    <div class='row'>
+      <div id='option1'>
+        <p>&nbsp;</p>
+      </div>
+      <div id='option2'>
+        <p>&nbsp;</p>
+      </div>
+      <div id='option3'>
+        <p>&nbsp;</p>
+      </div>
+    </div>
+
 </div>
 
 <script>
@@ -99,7 +113,7 @@ $(document).ready(function () {
   var txtArea = $('.text_area').find('input');
   var completeTxt = "";
   var txtWord;
-  var keyPadValues = [[], [], ['a','b','c','2'], ['d','e','f', '3'],
+  var keyPadValues = [['0'], ['1'], ['a','b','c','2'], ['d','e','f', '3'],
                       ['g', 'h', 'i', '4'], ['j','k', 'l', '5'], ['m', 'n', 'o', '6'],
                       ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
   var keyPadClicked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -147,11 +161,11 @@ $(document).ready(function () {
     txtWord = completeTxt.split(" ");
     txtWord = txtWord[txtWord.length - 1];
     // populate PTree
-    console.log(txtWord);
-    //populateAutocompleteResults(txtWord);
+    populateAutocompleteResults(txtWord);
   });
 
   function populateAutocompleteResults(word) {
+    var options = PTree.autocomplete(word);   
 
   }
 
