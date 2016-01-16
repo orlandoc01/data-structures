@@ -23,6 +23,8 @@
     }
   </style>
   <script src="../lib/jquery/jquery.js"></script>
+  <script src="../lib/underscore/underscore.js"></script>
+
 </head>
 <body>
 <div class='phone'>
@@ -99,7 +101,7 @@ $(document).ready(function () {
                       ['g', 'h', 'i', '4'], ['j','k', 'l', '5'], ['m', 'n', 'o', '6'],
                       ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
   var keyPadClicked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
-
+  var timer;
   $('.keypad').on('mouseenter', function () {
     $(this).addClass('highlighted');
   }); 
@@ -113,6 +115,7 @@ $(document).ready(function () {
   });
 
   $('.keypad').on('click', function () {
+    timer = Date.now();
     var index = parseInt($(this).data('num'));
     var numClicks = keyPadClicked[index]; 
     var chr = keyPadValues[index][numClicks];
@@ -120,12 +123,20 @@ $(document).ready(function () {
     txtStr = String(txtArea.val());
     if(numClicks === 0) {
       txtArea.val(txtStr + chr);
+      setTimeout(function() {
+        keyPadClicked[index] = 0;
+      }, 1000);
     }
     else {
       txtStr = txtStr.slice(0,txtStr.length-1) + chr;
       txtArea.val(txtStr);
     }
-
+    _.each(keyPadClicked, function(numClicked, OtherIndex) {
+      if(OtherIndex !== index) {
+        keyPadClicked[OtherIndex] = 0;
+      }
+    });
+  
   });
 
   
