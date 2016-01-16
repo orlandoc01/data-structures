@@ -93,6 +93,13 @@
 
 <script>
 $(document).ready(function () {
+  var txtArea = $('.text_area').find('input');
+  var txtStr;
+  var keyPadValues = [[], [], ['a','b','c','2'], ['d','e','f', '3'],
+                      ['g', 'h', 'i', '4'], ['j','k', 'l', '5'], ['m', 'n', 'o', '6'],
+                      ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9']];
+  var keyPadClicked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+
   $('.keypad').on('mouseenter', function () {
     $(this).addClass('highlighted');
   }); 
@@ -102,14 +109,16 @@ $(document).ready(function () {
   });
 
   $('.keypad').on('click', function () {
-    var num = $(this).data('num');
-  
-    var txtArea = $('.text_area').find('input');
-    var txtStr = txtArea.val();
-    txtArea.val(txtStr + num);
+    var index = parseInt($(this).data('num')); 
+    var chr = keyPadValues[index][keyPadClicked[index]];
+    keyPadClicked[index] = (keyPadClicked[index] + 1) % keyPadValues[index].length;
+
+    txtStr = txtArea.val();
+    txtArea.val(txtStr + chr);
 
 
   });
+
 });
   
 </script>
