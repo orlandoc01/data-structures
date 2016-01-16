@@ -79,15 +79,15 @@
 
     <div class="row" >
       <div class='keypad clear' data-num='10'>
-       <p>&nbsp;</p>
+       <p>Clear</p>
        <p>&nbsp;</p>
       </div>
       <div class='keypad' data-num='11'>
         <p>0</p>
         <p>&nbsp;</p>
       </div>
-      <div class='keypad' data-num='12'>
-        <p>#</p>
+      <div class='keypad space' data-num='12'>
+        <p>Space</p>
         <p>&nbsp;</p>
       </div>
     </div>
@@ -96,7 +96,8 @@
 <script>
 $(document).ready(function () {
   var txtArea = $('.text_area').find('input');
-  var txtStr;
+  var completeTxt = "";
+  var txtWord;
   var keyPadValues = [[], [], ['a','b','c','2'], ['d','e','f', '3'],
                       ['g', 'h', 'i', '4'], ['j','k', 'l', '5'], ['m', 'n', 'o', '6'],
                       ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
@@ -113,23 +114,26 @@ $(document).ready(function () {
  $('.clear').on('click', function (e) {
     txtArea.val('');
   });
-
+ $('.space').on('click', function () {
+  completeTxt = txtArea.val()+ " ";
+  txtArea.val(completeTxt);
+ });
   $('.keypad').on('click', function () {
     timer = Date.now();
     var index = parseInt($(this).data('num'));
     var numClicks = keyPadClicked[index]; 
     var chr = keyPadValues[index][numClicks];
     keyPadClicked[index] = (numClicks + 1) % keyPadValues[index].length;
-    txtStr = String(txtArea.val());
+    completeTxt = String(txtArea.val());
     if(numClicks === 0) {
-      txtArea.val(txtStr + chr);
+      txtArea.val(completeTxt + chr);
       setTimeout(function() {
         keyPadClicked[index] = 0;
       }, 1000);
     }
     else {
-      txtStr = txtStr.slice(0,txtStr.length-1) + chr;
-      txtArea.val(txtStr);
+      completeTxt = completeTxt.slice(0,completeTxt.length-1) + chr;
+      txtArea.val(completeTxt);
     }
     _.each(keyPadClicked, function(numClicked, OtherIndex) {
       if(OtherIndex !== index) {
@@ -138,9 +142,7 @@ $(document).ready(function () {
     });
   
   });
-
-  
-
+  txtWord = completeTxt.split(" ")[completeTxt.length-1];
 });
   
 </script>
