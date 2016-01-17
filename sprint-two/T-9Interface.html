@@ -26,6 +26,8 @@
   <script src="../lib/jquery/jquery.js"></script>
   <script src="../lib/underscore/underscore.js"></script>
   <script type="text/javascript" src="src/prefixTree.js"></script>
+  <script type="text/javascript" src="src/bigWordList.js"></script>
+
 
 </head>
 <body>
@@ -118,9 +120,9 @@ $(document).ready(function () {
                       ['p', 'q','r','s', '7'], ['t','u','v', '8'], ['w','x','y','z','9'], ];
   var keyPadClicked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
   var PTree = new PrefixTree();
-  PTree.insert("hi");
-  PTree.insert("hello");
-  PTree.insert("help");
+  _.each(wordsList, function (word) {
+    PTree.insert(word);
+  })
   var autocompleteResults = $('.autocomplete-Results');
   var option1 = $('#option1').find('p');
   var option2 = $('#option2').find('p');
@@ -139,6 +141,7 @@ $(document).ready(function () {
 
   $('.clear').on('click', function (e) {
     txtArea.val('');
+    clearAutocompleteResults();
   });
 
   $('.space').on('click', function () {
