@@ -30,18 +30,15 @@ PrefixTree.prototype.insert = function (str) {
 };
 
 PrefixTree.prototype.navigate = function(str) {
-  if(str.length === 1 && str[0] === this.value) {
-    return this;
+
+  var matchingChild = this.children.find(function (childPT) {
+    return childPT.value === str[0];
+  });
+  if(matchingChild !== undefined) {
+    if(str.length === 1 ) return matchingChild;
+    else return matchingChild.navigate(str.slice(1));
   } else {
-    var matchingChild = this.children.find(function (childPT) {
-      return childPT.value === str[0];
-    });
-    if(matchingChild !== undefined) {
-      if(str.length === 1 ) return matchingChild.navigate(str);
-      else return matchingChild.navigate(str.slice(1));
-    } else {
-      return false;
-    }
+    return false;
   }
 };
 
